@@ -43,7 +43,7 @@
   };
   
   custom_button_0: custom_button_0 {
-    compatible = "custom,button";
+    compatible = "custom-button";
     gpios = <&gpiog 9 GPIO_ACTIVE_LOW>;
     label = "Custom button";
     status = "okay";

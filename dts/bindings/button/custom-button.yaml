@@ -4,7 +4,7 @@
 description: |
   Custom button driver
 
-compatible: "custom,button"
+compatible: "custom-button"
 
 include: [ gpio-keys.yaml ]
 

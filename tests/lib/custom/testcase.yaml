@@ -2,6 +2,7 @@ common:
   tags: extensibility
   integration_platforms:
     - custom_aca
+    - stm32f4_disco
 tests:
   lib.custom: {}
   lib.custom.non_default:

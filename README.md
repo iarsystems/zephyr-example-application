@@ -1,16 +1,16 @@
 # IAR Zephyr Example Application
 
-<a href="https://github.com/zephyrproject-rtos/example-application/actions/workflows/build.yml?query=branch%3Amain">
-  <img src="https://github.com/zephyrproject-rtos/example-application/actions/workflows/build.yml/badge.svg?event=push">
+<a href="https://github.com/iarsystems/zephyr-example-application/actions/workflows/build.yml?query=branch%3Amain">
+<img src="https://github.com/iarsystems/zephyr-example-application/actions/workflows/build.yml/badge.svg?event=push">
 </a>
-<a href="https://github.com/zephyrproject-rtos/example-application/actions/workflows/docs.yml?query=branch%3Amain">
-  <img src="https://github.com/zephyrproject-rtos/example-application/actions/workflows/docs.yml/badge.svg?event=push">
+<a href="https://github.com/iarsystems/zephyr-example-application/actions/workflows/docs.yml?query=branch%3Amain">
+<img src="https://github.com/iarsystems/zephyr-example-application/actions/workflows/docs.yml/badge.svg?event=push">
 </a>
-<a href="https://zephyrproject-rtos.github.io/example-application">
-  <img alt="Documentation" src="https://img.shields.io/badge/documentation-3D578C?logo=sphinx&logoColor=white">
+<a href="https://iarsystems.github.io/zephyr-example-application">
+<img alt="Documentation" src="https://img.shields.io/badge/documentation-3D578C?logo=sphinx&logoColor=white">
 </a>
-<a href="https://zephyrproject-rtos.github.io/example-application/doxygen">
-  <img alt="API Documentation" src="https://img.shields.io/badge/API-documentation-3D578C?logo=c&logoColor=white">
+<a href="https://iarsystems.github.io/zephyr-example-application/doxygen">
+<img alt="API Documentation" src="https://img.shields.io/badge/API-documentation-3D578C?logo=c&logoColor=white">
 </a>
 
 This repository contains a Zephyr example application ready to use with IAR.

@@ -4,8 +4,8 @@
  */
 
 #include <zephyr/kernel.h>
-#include <zephyr/device.h>
-#include <zephyr/drivers/gpio.h>
+
+#include <app/drivers/blink.h>
 
 /* size of stack area */
 #define STACKSIZE 1024

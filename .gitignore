@@ -2,6 +2,12 @@
 .vscode
 *.swp
 *~
+*.custom_argvars
+*.ew?
+.cache/
+settings/
+Debug/
+Default/
 
 # python
 .venv

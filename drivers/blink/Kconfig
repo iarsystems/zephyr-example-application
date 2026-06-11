@@ -1,10 +1,11 @@
+# Copyright (c) 2026 IAR Systems AB
 # Copyright (c) 2024 Nordic Semiconductor ASA
 # SPDX-License-Identifier: Apache-2.0
 
 menuconfig BLINK
-	bool "Blink device drivers"
+	bool "Blink device driver"
 	help
-	  This option enables the blink custom driver class.
+	  This option enables the customized blink driver class.
 
 if BLINK
 

@@ -1,0 +1,14 @@
+# Copyright (c) 2026 IAR Systems AB
+# SPDX-License-Identifier: Apache-2.0
+
+config BUTTON
+  bool "Custom button driver"
+  default y
+  depends on GPIO
+  help
+    Enable custom button driver.
+
+config BUTTON_INIT_PRIORITY
+  int "Initialization priority"
+  default 80
+  depends on BUTTON

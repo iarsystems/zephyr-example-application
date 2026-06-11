@@ -1,0 +1,13 @@
+identifier: custom_aca
+name: CUSTOM IAR STM32F429II ACA
+vendor: iar
+type: mcu
+arch: arm
+ram: 192
+flash: 2048
+toolchain:
+  - iar
+  - gnuarmemb
+  - zephyr
+supported:
+  - gpio

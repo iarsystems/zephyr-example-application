@@ -1,16 +1,17 @@
-Welcome to Example Application's documentation!
-===============================================
+IAR Zephyr Example Application documentation
+############################################
 
-This is a simple Sphinx documentation setup for ``example-application``.
+This is a simple Sphinx documentation setup for ``zephyr-example-application``.
 
+Contents
+********
 .. toctree::
    :maxdepth: 2
-   :caption: Contents
 
-   zephyr
+   readme
 
 Indices and tables
-==================
+******************
 
 * :ref:`genindex`
 * :ref:`search`

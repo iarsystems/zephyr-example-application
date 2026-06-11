@@ -1,10 +1,22 @@
+# Copyright (c) 2026 IAR Systems AB
+# SPDX-License-Identifier: Apache-2.0
+
 name: Build
 
 on:
   push:
   pull_request:
+  # Run the workflow manually
+  workflow_dispatch:
+  # Run the workflow on a nightly schedule
   schedule:
     - cron: "0 0 * * *"
+
+# Set a new GitHub Actions Secret named IAR_LMS_BEARER_TOKEN
+# for your repository. The secret is then securely forwarded
+# to an environment variable consumed by this workflow.
+env:
+  IAR_LMS_BEARER_TOKEN: ${{ secrets.IAR_LMS_BEARER_TOKEN }}
 
 permissions:
   contents: read
@@ -15,13 +27,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-22.04, macos-14, windows-2025]
+        os: [ubuntu-22.04]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
-          path: example-application
+          path: zephyr-example-application
           persist-credentials: false
 
       - name: Set up Python
@@ -32,24 +44,27 @@ jobs:
       - name: Setup Zephyr project
         uses: zephyrproject-rtos/action-zephyr-setup@v1
         with:
-          app-path: example-application
+          app-path: zephyr-example-application
           toolchains: arm-zephyr-eabi
           ccache-cache-key: ${{ matrix.os }}
 
-      - name: Build firmware
-        working-directory: example-application
+      - name: Setup IAR Build Tools for Arm
+        working-directory: zephyr-example-application
         shell: bash
         run: |
-          if [ "${{ runner.os }}" = "Windows" ]; then
-            EXTRA_TWISTER_FLAGS="--short-build-path -O/tmp/twister-out"
-          fi
+          wget https://github.com/iarsystems/arm/releases/download/9.70.4/cxarm-9.70.4-linux-x86_64-minimal.tar.bz2
+          tar -xf cxarm-9.70.4-linux-x86_64-minimal.tar.bz2
+#          echo "ZEPHYR_TOOLCHAIN_VARIANT=iar" >> $GITHUB_ENV
+          echo "IAR_TOOLCHAIN_PATH=$PWD/cxarm-9.70.4/arm" >> $GITHUB_ENV
+
+      - name: Build firmware
+        working-directory: zephyr-example-application
+        shell: bash
+        run: |
           west twister -T app -v --inline-logs --integration $EXTRA_TWISTER_FLAGS
 
       - name: Twister Tests
-        working-directory: example-application
+        working-directory: zephyr-example-application
         shell: bash
         run: |
-          if [ "${{ runner.os }}" = "Windows" ]; then
-            EXTRA_TWISTER_FLAGS="--short-build-path -O/tmp/twister-out"
-          fi
           west twister -T tests -v --inline-logs --integration $EXTRA_TWISTER_FLAGS

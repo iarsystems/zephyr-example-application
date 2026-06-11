@@ -1,3 +1,4 @@
+# Copyright (c) 2026 IAR Systems AB
 # Copyright (c) 2024, Nordic Semiconductor ASA
 # SPDX-License-Identifier: Apache-2.0
 
@@ -14,10 +15,10 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        doxygen-version: [1.9.6, 1.14.0]
+        doxygen-version: [1.14.0]
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           persist-credentials: false
 

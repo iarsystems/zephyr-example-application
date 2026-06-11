@@ -1,0 +1,20 @@
+# Copyright (c) 2026 IAR Systems AB
+# SPDX-License-Identifier: Apache-2.0
+
+description: |
+  Custom button driver
+
+compatible: "custom,button"
+
+include: [ gpio-keys.yaml ]
+
+properties:
+  label:
+    type: string
+    required: false
+    description: Human-readable label for the button.
+  gpios:
+    type: phandle-array
+    required: true
+    description: GPIO pin for the custom button.
+

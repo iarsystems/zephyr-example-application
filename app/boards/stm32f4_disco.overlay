@@ -1,0 +1,52 @@
+/*
+ * Copyright (c) 2026 IAR Systems AB
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/* This devicetree overlay file will be automatically picked by the Zephyr
+ * build system when building the sample for the IAR stm32fi4_disco board.
+ * It shows how the example-application can be built on sample boards
+ * already provided by Zephyr.
+ */
+
+/ {
+  blink0_led: led_3 {
+    compatible = "blink-gpio-led";
+    led-gpios = <&gpiod 12 GPIO_ACTIVE_HIGH>;
+    blink-period-ms = <100>;
+  };
+
+  blink1_led: led_4 {
+    compatible = "blink-gpio-led";
+    led-gpios = <&gpiod 13 GPIO_ACTIVE_HIGH>;
+    blink-period-ms = <100>;
+  };
+
+  blink2_led: led_5 {
+    compatible = "blink-gpio-led";
+    led-gpios = <&gpiod 14 GPIO_ACTIVE_HIGH>;
+    blink-period-ms = <100>;
+  };
+
+  blink3_led: led_6 {
+    compatible = "blink-gpio-led";
+    led-gpios = <&gpiod 15 GPIO_ACTIVE_HIGH>;
+    blink-period-ms = <100>;
+  };
+
+  custom_button_0: custom_button_0 {
+    compatible = "custom,button";
+    gpios = <&gpioa 0 GPIO_ACTIVE_HIGH>;
+    label = "Custom button";
+    status = "okay";
+  };
+};
+
+&gpioa {
+  status = "okay";
+};
+
+&gpiod {
+  status = "okay";
+};
+

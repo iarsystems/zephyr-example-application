@@ -1,4 +1,4 @@
-# Zephyr Example Application
+# IAR Zephyr Example Application
 
 <a href="https://github.com/zephyrproject-rtos/example-application/actions/workflows/build.yml?query=branch%3Amain">
   <img src="https://github.com/zephyrproject-rtos/example-application/actions/workflows/build.yml/badge.svg?event=push">
@@ -13,11 +13,12 @@
   <img alt="API Documentation" src="https://img.shields.io/badge/API-documentation-3D578C?logo=c&logoColor=white">
 </a>
 
-This repository contains a Zephyr example application. The main purpose of this
-repository is to serve as a reference on how to structure Zephyr-based
-applications. Some of the features demonstrated in this example are:
+This repository contains a Zephyr example application ready to use with IAR.
+The main purpose of this repository is to serve as a reference on how to 
+structure Zephyr-based applications. 
+Some of the features demonstrated in this example are:
 
-- Basic [Zephyr application][app_dev] skeleton
+- Basic multi-threaded [Zephyr application][app_dev] skeleton
 - [Zephyr workspace applications][workspace_app]
 - [Zephyr modules][modules]
 - [West T2 topology][west_t2]
@@ -30,58 +31,71 @@ applications. Some of the features demonstrated in this example are:
 - Custom [Zephyr runner][runner_ext]
 - Doxygen and Sphinx documentation boilerplate
 
-This repository is versioned together with the [Zephyr main tree][zephyr]. This
-means that every time that Zephyr is tagged, this repository is tagged as well
-with the same version number, and the [manifest](west.yml) entry for `zephyr`
-will point to the corresponding Zephyr tag. For example, the `example-application`
-v2.6.0 will point to Zephyr v2.6.0. Note that the `main` branch always
-points to the development branch of Zephyr, also `main`.
+This repository uses the development branch of [Zephyr][zephyr] and the [manifest](west.yml) file points to `main`. It is possible to change the manifest file in your own application to point to a corresponding Zephyr tag. Note that Zephyr 4.1 was the first production-grade version providing support for the IAR toolchain for Arm. [^1] 
+
+[^1]: [Zephyr RTOS 4.1 Now Available: Performance Improvements, Support for IAR Toolchain, and More]( https://zephyrproject.org/zephyr-rtos-4-1-is-available/)
 
 [app_dev]: https://docs.zephyrproject.org/latest/develop/application/index.html
 [workspace_app]: https://docs.zephyrproject.org/latest/develop/application/index.html#zephyr-workspace-app
 [modules]: https://docs.zephyrproject.org/latest/develop/modules.html
 [west_t2]: https://docs.zephyrproject.org/latest/develop/west/workspaces.html#west-t2
-[board_porting]: https://docs.zephyrproject.org/latest/guides/porting/board_porting.html
-[bindings]: https://docs.zephyrproject.org/latest/guides/dts/bindings.html
-[drivers]: https://docs.zephyrproject.org/latest/reference/drivers/index.html
+[board_porting]: https://docs.zephyrproject.org/latest/hardware/porting/board_porting.html
+[bindings]: https://docs.zephyrproject.org/latest/build/dts/bindings.html
+[drivers]: https://docs.zephyrproject.org/latest/kernel/drivers/index.html
 [zephyr]: https://github.com/zephyrproject-rtos/zephyr
 [west_ext]: https://docs.zephyrproject.org/latest/develop/west/extensions.html
 [runner_ext]: https://docs.zephyrproject.org/latest/develop/modules.html#external-runners
 
 ## Getting Started
+This guide assumes you already have a compatible IAR toolchain for Arm (v9.70.1+) installed and ready to use.
 
-Before getting started, make sure you have a proper Zephyr development
-environment. Follow the official
-[Zephyr Getting Started Guide](https://docs.zephyrproject.org/latest/getting_started/index.html).
+Before getting started, make sure you have a proper Zephyr development environment.
+Follow the official [Zephyr Getting Started Guide](https://docs.zephyrproject.org/latest/develop/getting_started/index.html).
+
+>[!TIP]
+>When you reach the **Install the Zephyr SDK** section, you only need:
+>```
+>west sdk install --gnu-toolchains arm-zephyr-eabi
+>```
+>Doing this will prevent `west` from downloading gigabytes of unrelated toolchains, which would take time to download and would occupy significant storage space. Once you have reached that point, you can return to this guide.
+
 
 ### Initialization
 
 The first step is to initialize the workspace folder (``my-workspace``) where
-the ``example-application`` and all Zephyr modules will be cloned. Run the following
+the ``zephyr-example-application`` and all Zephyr modules will be cloned. Run the following
 command:
 
 ```shell
-# initialize my-workspace for the example-application (main branch)
-west init -m https://github.com/zephyrproject-rtos/example-application --mr main my-workspace
+# initialize my-workspace for the zephyr-example-application (main branch) 
+west init -m https://github.com/iarsystems/zephyr-example-application --mr main my-workspace
 # update Zephyr modules
 cd my-workspace
 west update
 ```
 
 ### Building and running
+For building with IAR, make sure you set `ZEPHYR_TOOLCHAIN_VARIANT` [^2] and `IAR_TOOLCHAIN_PATH` in your system and then run the following commands:
 
-To build the application, run the following command:
+[^2]: [Zephyr Docs/Developing with Zephyr/Toolchains/IAR toolchain for Arm](https://docs.zephyrproject.org/latest/develop/toolchains/iar_arm_toolchain.html)
 
 ```shell
-cd example-application
+cd zephyr-example-application
 west build -b $BOARD app
 ```
 
 where `$BOARD` is the target board.
 
-You can use the `custom_plank` board found in this
+You can use the `custom_aca` board found in this
 repository. Note that Zephyr sample boards may be used if an
-appropriate overlay is provided (see `app/boards`).
+appropriate overlay is provided (see [`app/boards`][apps-boards]).
+When switching boards, always perform a pristine build:
+```shell
+# pristine builds are obtained with -p or --pristine
+west build -b $BOARD app -p
+```
+
+[apps-boards]: app/boards
 
 A sample debug configuration is also provided. To apply it, run the following
 command:
@@ -93,7 +107,19 @@ west build -b $BOARD app -- -DEXTRA_CONF_FILE=debug.conf
 Once you have built the application, run the following command to flash it:
 
 ```shell
+# with the IAR I-jet (default)
 west flash
+# or with the SEGGER J-Link
+west flash --runner jlink
+```
+
+If you have set `IAR_TOOLCHAIN_PATH` to an instance of IAR Embedded Workbench, you can debug your application directly, with the IAR C-SPY Debugger for Arm:
+
+```shell
+# with the IAR I-jet (default)
+west debug
+# or with the SEGGER J-link
+west debug --runner jlink
 ```
 
 ### Testing

@@ -1,0 +1,90 @@
+/*
+ * Copyright (c) 2026 IAR Systems AB
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/dts-v1/;
+#include <st/f4/stm32f429Xi.dtsi>
+#include <st/f4/stm32f429iitx-pinctrl.dtsi>
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+/ {
+  model = "CUSTOM IAR STM32F429II-ACA board";
+  compatible = "iar,custom_aca";
+
+  chosen {
+    zephyr,sram = &sram0;
+    zephyr,flash = &flash0;
+    zephyr,dtcm = &ccm0;
+  };
+
+  blink0_led: blink0-led {
+    compatible = "blink-gpio-led";
+    led-gpios = <&gpioa 4 GPIO_ACTIVE_LOW>;
+    blink-period-ms = <100>;
+  };
+
+  blink1_led: blink1-led {
+    compatible = "blink-gpio-led";
+    led-gpios = <&gpiod 4 GPIO_ACTIVE_LOW>;
+    blink-period-ms = <100>;
+  };
+
+  blink2_led: blink2-led {
+    compatible = "blink-gpio-led";
+    led-gpios = <&gpiod 5 GPIO_ACTIVE_LOW>;
+    blink-period-ms = <100>;
+  };
+
+  blink3_led: blink3-led {
+    compatible = "blink-gpio-led";
+    led-gpios = <&gpiod 6 GPIO_ACTIVE_LOW>;
+    blink-period-ms = <100>;
+  };
+  
+  custom_button_0: custom_button_0 {
+    compatible = "custom,button";
+    gpios = <&gpiog 9 GPIO_ACTIVE_LOW>;
+    label = "Custom button";
+    status = "okay";
+  };  
+};
+
+&gpiog {
+  status = "okay";
+};
+
+&gpioa {
+  status = "okay";
+};
+
+&gpiod {
+  status = "okay";
+};
+
+&clk_lsi {
+  status = "okay";
+};
+
+&clk_hse {
+  clock-frequency = <DT_FREQ_M(8)>;
+  status = "okay";
+};
+
+&pll {
+  div-m = <8>;
+  mul-n = <336>;
+  div-p = <2>;
+  div-q = <7>;
+  clocks = <&clk_hse>;
+  status = "okay";
+};
+
+&rcc {
+  clocks = <&pll>;
+  clock-frequency = <DT_FREQ_M(168)>;
+  ahb-prescaler = <1>;
+  apb1-prescaler = <4>;
+  apb2-prescaler = <2>;
+};
+

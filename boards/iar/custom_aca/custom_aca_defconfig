@@ -1,0 +1,11 @@
+# Copyright (c) 2026 IAR Systems AB
+# SPDX-License-Identifier: Apache-2.0
+
+# Enable MPU.
+CONFIG_ARM_MPU=y
+
+# Enable HW stack protection.
+CONFIG_HW_STACK_PROTECTION=y
+
+# Enable GPIO on all configurations for convenience.
+CONFIG_GPIO=y

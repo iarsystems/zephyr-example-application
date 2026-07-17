@@ -7,7 +7,7 @@
 
 #include <app/drivers/blink.h>
 
-#include <app_version.h>
+#include <zephyr/app_version.h>
 
 /* size of stack area */
 #define STACKSIZE 1024
